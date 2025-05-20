@@ -1,0 +1,19 @@
+#def factorial(n):
+#    if n == 0:
+#        return 0
+#    return n * factorial(n - 1)
+
+
+#blad znajduje sie w if, dokladnie w 2 i 3 linijce, poniewaz silnia z 0 to nie jest 0 tylko 1, a kod zwroci nam 0
+
+
+#poprawiona wersja kodu:
+def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n - 1)
+
+#testy:
+assert factorial(0) == 1
+assert factorial(3) == 6
+assert factorial(5) == 120
