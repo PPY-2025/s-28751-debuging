@@ -1,0 +1,107 @@
+# class Character:
+#     def __init__(self, name, hp):
+#         self.name = name
+#         self.hp = hp
+
+#     def take_damage(self, amount):
+#         self.hp = self.hp - amount
+#         if self.hp < 0:
+#             self.hp = 0
+
+# class Warrior(Character):
+#     def __init__(self, name, hp, strength):
+#         super().__init__(name, hp)
+#         self.strength = strength
+
+#     def attack(self, target):
+#         damage = self.strength * 1.5
+#         target.take_damage(damage)
+
+# class Mage(Character):
+#     def __init__(self, name, hp, mana):
+#         super().__init__(name, hp)
+#         self.mana = mana
+
+#     def attack(self, target):
+#         if self.mana >= 10:
+#             target.take_damage(25)
+#             self.mana -= 10
+#         else:
+#             print("Not enough mana!")
+
+# def simulate_battle():
+#     w = Warrior("Thorgal", 100, 10)
+#     m = Mage("Merlin", 60, 20)
+
+#     print("Start:", w.hp, m.hp)
+#     w.attack(m)
+#     m.attack(w)
+#     m.attack(w)
+#     m.attack(w)
+#     m.attack(w)
+#     print("End:", w.hp, m.hp)
+
+# simulate_battle()
+
+
+
+#tutaj znalazlam jeden bład: self.hp = self.hp - amount
+#daje float, przez co hp może być liczba zmiennoprzecinkowa
+
+
+
+class Character:
+    def __init__(self, name, hp):
+        self.name = name
+        self.hp = int(hp)       #czy hp to liczba calkowita
+
+    def take_damage(self, amount):
+        self.hp = int(self.hp - amount)     #rzutujemy na int, by uniknąć float
+        if self.hp < 0:
+            self.hp = 0
+
+
+class Warrior(Character):
+    def __init__(self, name, hp, strength):
+        super().__init__(name, hp)
+        self.strength = strength
+
+    def attack(self, target):
+        damage = int(self.strength * 1.5)       #dodanie rzutowania na int
+        target.take_damage(damage)
+
+
+#atakuje jesli ma min 10 many
+class Mage(Character):
+    def __init__(self, name, hp, mana):
+        super().__init__(name, hp)
+        self.mana = mana
+
+    def attack(self, target):
+        if self.mana >= 10:
+            target.take_damage(25)
+            self.mana -= 10
+        else:
+            print("Not enough mana!")
+
+
+def simulate_battle():
+    w = Warrior("Thorgal", 100, 10)
+    m = Mage("Merlin", 60, 30)      30 many zamiast 20 zeby mozna bylo 3x zaatakowac
+
+    print("Start:", w.hp, m.hp)
+
+    w.attack(m)
+    m.attack(w)
+    m.attack(w)
+    m.attack(w)
+    m.attack(w)
+
+    print("End:", w.hp, m.hp)
+
+    assert m.hp == 45           #60-15=45
+    assert w.hp == 25           #100-3*25= =25
+    assert m.mana == 0          #30*30=0
+
+
+simulate_battle()
